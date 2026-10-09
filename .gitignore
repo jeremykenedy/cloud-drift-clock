@@ -1,0 +1,10 @@
+/build/
+/coverage/.gradle/
+/coverage/build/
+/coverage/gradle-cache/
+__pycache__/
+*.py[cod]
+/.coverage
+/device-state.json
+/validation/
+*.idsig

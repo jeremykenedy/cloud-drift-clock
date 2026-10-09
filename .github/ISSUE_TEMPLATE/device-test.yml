@@ -1,0 +1,31 @@
+name: Device test report
+description: Report a Cloud Drift Clock test on physical TV hardware
+title: "Device test: "
+labels: [device-test]
+body:
+  - type: input
+    id: model
+    attributes:
+      label: Device model
+      placeholder: Manufacturer and model
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS version and API level
+    validations:
+      required: true
+  - type: input
+    id: resolution
+    attributes:
+      label: Display resolution
+    validations:
+      required: true
+  - type: textarea
+    id: results
+    attributes:
+      label: Results
+      description: Include installation, screensaver selection/start, animation, settings, and any failures.
+    validations:
+      required: true

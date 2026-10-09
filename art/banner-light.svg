@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" role="img" aria-labelledby="title desc">
+  <title id="title">Cloud Drift Clock</title>
+  <desc id="desc">An animated cloudscape and drifting clock screensaver with no ads, analytics, tracking, or reporting.</desc>
+  <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#dceefa"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>
+  <rect width="800" height="200" rx="16" fill="#fff" stroke="#e5e7eb"/>
+  <text x="40" y="78" fill="#0f172a" font-family="system-ui,-apple-system,'Segoe UI',sans-serif" font-size="40" font-weight="700" letter-spacing="-.5">Cloud Drift Clock</text>
+  <text x="40" y="110" fill="#64748b" font-family="system-ui,-apple-system,'Segoe UI',sans-serif" font-size="14">A floating digital clock carried through a moving cloudscape</text>
+  <g font-family="system-ui,-apple-system,'Segoe UI',sans-serif" font-size="10" font-weight="500" text-anchor="middle">
+    <rect x="40" y="130" width="92" height="22" rx="11" fill="#eff6ff" stroke="#3b82f6" stroke-width=".8"/><text x="86" y="144" fill="#1e40af">Always moving</text>
+    <rect x="140" y="130" width="100" height="22" rx="11" fill="#f0fdf4" stroke="#22c55e" stroke-width=".8"/><text x="190" y="144" fill="#166534">No reporting</text>
+  </g>
+  <g transform="translate(572 32)">
+    <rect width="188" height="136" rx="14" fill="url(#sky)" stroke="#bfdbed"/>
+    <ellipse cx="87" cy="100" rx="84" ry="17" fill="#fff" opacity=".82"/>
+    <ellipse cx="64" cy="88" rx="28" ry="25" fill="#fff" opacity=".93"/>
+    <ellipse cx="104" cy="78" rx="36" ry="34" fill="#fff" opacity=".92"/>
+    <ellipse cx="139" cy="90" rx="24" ry="22" fill="#fff" opacity=".91"/>
+    <text x="95" y="77" text-anchor="middle" fill="#304b60" font-family="system-ui,sans-serif" font-size="21" font-weight="300">7:42</text>
+  </g>
+</svg>
