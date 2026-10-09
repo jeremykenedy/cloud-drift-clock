@@ -9,7 +9,7 @@
 <p align="center">An animated digital clock drifting through layered, moving clouds for Fire TV, Android TV, and Google TV.</p>
 
 <p align="center">
-  <a href="https://github.com/jeremykenedy/cloud-drift-clock/releases"><img src="https://img.shields.io/github/v/release/jeremykenedy/cloud-drift-clock?display_name=tag&label=release" alt="Latest release"></a>
+  <a href="https://github.com/jeremykenedy/cloud-drift-clock/releases"><img src="https://img.shields.io/github/v/release/jeremykenedy/cloud-drift-clock?display_name=tag&amp;label=release&amp;cacheSeconds=0" alt="Latest release"></a>
   <a href="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/ci.yml"><img src="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/ci.yml/badge.svg" alt="Build and tests"></a>
   <a href="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/style.yml"><img src="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/style.yml/badge.svg" alt="Code style"></a>
   <a href="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/docs.yml"><img src="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/docs.yml/badge.svg" alt="Documentation checks"></a>
