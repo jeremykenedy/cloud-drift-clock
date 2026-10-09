@@ -14,7 +14,7 @@
   <a href="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/style.yml"><img src="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/style.yml/badge.svg" alt="Code style"></a>
   <a href="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/docs.yml"><img src="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/docs.yml/badge.svg" alt="Documentation checks"></a>
   <a href="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/security.yml"><img src="https://github.com/jeremykenedy/cloud-drift-clock/actions/workflows/security.yml/badge.svg" alt="Privacy checks"></a>
-  <a href="https://github.com/jeremykenedy/cloud-drift-clock/releases"><img src="https://img.shields.io/github/downloads/jeremykenedy/cloud-drift-clock/total?label=downloads" alt="GitHub release downloads"></a>
+  <a href="https://github.com/jeremykenedy/cloud-drift-clock/releases"><img src="https://img.shields.io/github/downloads/jeremykenedy/cloud-drift-clock/total?label=downloads&amp;cacheSeconds=0" alt="GitHub release downloads"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/jeremykenedy/cloud-drift-clock?label=Apache-2.0" alt="Apache License 2.0"></a>
   <a href="https://github.com/jeremykenedy?tab=followers"><img src="https://img.shields.io/github/followers/jeremykenedy?label=follow%20Jeremy" alt="Follow Jeremy Kenedy"></a>
   <a href="https://github.com/jeremykenedy/cloud-drift-clock/stargazers"><img src="https://img.shields.io/github/stars/jeremykenedy/cloud-drift-clock?style=social" alt="Star this repository"></a>
