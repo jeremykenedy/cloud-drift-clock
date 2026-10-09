@@ -119,7 +119,7 @@ Cloud Drift Clock has no ads, analytics, tracking, telemetry, crash reporting, o
 
 | Device | Status | Evidence |
 | --- | --- | --- |
-| Android TV emulator, API 31, 1920 by 1080 | Settings and full-screen animation preview exercised; DreamService selection/start unavailable because this emulator image exposes no DreamManager service | `adb` screenshot and provider queries, 2026-10-08 |
+| Android TV emulator, API 31, 1920 by 1080 | Settings and full-screen animation preview exercised; provider settings queried and updated; native DreamService selection/start unavailable because this image lacks `cmd dream` | `adb` screenshot and provider queries, 2026-10-08 |
 | Fire TV hardware | Untested; no device was available | [Please help test](https://github.com/jeremykenedy/cloud-drift-clock/issues/new?template=device-test.yml) and report model, Fire OS version, resolution, behavior, and results |
 | Android TV hardware | Untested; no device was available | [Please help test](https://github.com/jeremykenedy/cloud-drift-clock/issues/new?template=device-test.yml) and report model, Android version, resolution, behavior, and results |
 | Google TV hardware | Untested; no device was available | [Please help test](https://github.com/jeremykenedy/cloud-drift-clock/issues/new?template=device-test.yml) and report model, Android version, resolution, behavior, and results |
