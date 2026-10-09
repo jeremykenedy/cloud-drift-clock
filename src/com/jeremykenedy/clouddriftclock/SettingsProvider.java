@@ -76,13 +76,13 @@ public final class SettingsProvider extends ContentProvider {
     private Cursor settingsCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[] {"key", "value"});
         SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(getContext());
-        addValue(cursor, "palette", p.getString("palette", "day"));
-        addValue(cursor, "density", p.getString("density", "balanced"));
-        addValue(cursor, "speed", p.getString("speed", "gentle"));
-        addValue(cursor, "clock_size", p.getString("clock_size", "standard"));
-        addValue(cursor, "clock_drift", p.getString("clock_drift", "short"));
-        addValue(cursor, "clock_format", p.getString("clock_format", "12h"));
-        addValue(cursor, "show_seconds", p.getString("show_seconds", "false"));
+        addValue(cursor, "palette", SettingsValues.normalizeChoice("palette", p.getAll().get("palette"), "day"));
+        addValue(cursor, "density", SettingsValues.normalizeChoice("density", p.getAll().get("density"), "balanced"));
+        addValue(cursor, "speed", SettingsValues.normalizeChoice("speed", p.getAll().get("speed"), "gentle"));
+        addValue(cursor, "clock_size", SettingsValues.normalizeChoice("clock_size", p.getAll().get("clock_size"), "standard"));
+        addValue(cursor, "clock_drift", SettingsValues.normalizeChoice("clock_drift", p.getAll().get("clock_drift"), "short"));
+        addValue(cursor, "clock_format", SettingsValues.normalizeChoice("clock_format", p.getAll().get("clock_format"), "12h"));
+        addValue(cursor, "show_seconds", SettingsValues.normalizeChoice("show_seconds", p.getAll().get("show_seconds"), "false"));
         addValue(cursor, "randomize_all", Boolean.toString(p.getBoolean("randomize_all", false)));
         return cursor;
     }

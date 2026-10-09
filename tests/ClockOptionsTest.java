@@ -107,6 +107,17 @@ public final class ClockOptionsTest {
         assertFalse(SettingsValues.isSupported("unknown", "day"));
     }
 
+    @Test
+    public void normalizesStaleChoicePreferenceTypesWithoutFailing() {
+        assertEquals("night", SettingsValues.normalizeChoice("palette", "night", "day"));
+        assertEquals("day", SettingsValues.normalizeChoice("palette", "invalid", "day"));
+        assertEquals("true", SettingsValues.normalizeChoice("show_seconds", Boolean.TRUE, "false"));
+        assertEquals("false", SettingsValues.normalizeChoice("show_seconds", Boolean.FALSE, "false"));
+        assertEquals("balanced", SettingsValues.normalizeChoice("density", Boolean.TRUE, "balanced"));
+        assertEquals("day", SettingsValues.normalizeChoice("palette", 1, "day"));
+        assertEquals("day", SettingsValues.normalizeChoice("palette", null, "day"));
+    }
+
     private static void assertOptions(String palette, String speed, String density, String size,
             String drift, String format, String seconds, int expectedPalette, float expectedSpeed,
             int expectedCount, int expectedSize, int expectedDrift, boolean expected24Hour,
