@@ -86,7 +86,11 @@ public final class SettingsActivity extends Activity {
                 android.R.layout.simple_spinner_item, labels);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        String selected = preferences.getString(key, fallback);
+        Object stored = preferences.getAll().get(key);
+        String selected = SettingsValues.normalizeChoice(key, stored, fallback);
+        if (stored != null && !(stored instanceof String)) {
+            preferences.edit().putString(key, selected).apply();
+        }
         int selection = 0;
         for (int i = 0; i < values.length; i++) if (values[i].equals(selected)) selection = i;
         spinner.setSelection(selection);

@@ -10,8 +10,8 @@ UNSIGNED=false
 if [[ "${1:-}" == "--unsigned" ]]; then UNSIGNED=true; fi
 KEYSTORE="${CLOUD_CLOCK_KEYSTORE:-$HOME/.android/cloud-drift-clock.jks}"
 KEYPASS="${CLOUD_CLOCK_KEYPASS:-$HOME/.android/cloud-drift-clock.pass}"
-VERSION_NAME="${VERSION_NAME:-1.0.0}"
-VERSION_CODE="${VERSION_CODE:-1}"
+VERSION_NAME="${VERSION_NAME:-1.0.1}"
+VERSION_CODE="${VERSION_CODE:-2}"
 
 for tool in javac keytool openssl zip; do
   command -v "$tool" >/dev/null || { echo "Missing required tool: $tool" >&2; exit 1; }

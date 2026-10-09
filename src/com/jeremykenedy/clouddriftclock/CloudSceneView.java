@@ -73,13 +73,13 @@ final class CloudSceneView extends View {
     private void loadOptions() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         options = ClockOptions.resolve(
-                preferences.getString("palette", "day"),
-                preferences.getString("speed", "gentle"),
-                preferences.getString("density", "balanced"),
-                preferences.getString("clock_size", "standard"),
-                preferences.getString("clock_drift", "short"),
-                preferences.getString("clock_format", "12h"),
-                preferences.getString("show_seconds", "false"),
+                SettingsValues.normalizeChoice("palette", preferences.getAll().get("palette"), "day"),
+                SettingsValues.normalizeChoice("speed", preferences.getAll().get("speed"), "gentle"),
+                SettingsValues.normalizeChoice("density", preferences.getAll().get("density"), "balanced"),
+                SettingsValues.normalizeChoice("clock_size", preferences.getAll().get("clock_size"), "standard"),
+                SettingsValues.normalizeChoice("clock_drift", preferences.getAll().get("clock_drift"), "short"),
+                SettingsValues.normalizeChoice("clock_format", preferences.getAll().get("clock_format"), "12h"),
+                SettingsValues.normalizeChoice("show_seconds", preferences.getAll().get("show_seconds"), "false"),
                 preferences.getBoolean("randomize_all", false),
                 new Random(System.currentTimeMillis()));
     }

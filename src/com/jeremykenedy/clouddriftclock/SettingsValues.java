@@ -3,6 +3,15 @@ package com.jeremykenedy.clouddriftclock;
 public final class SettingsValues {
     private SettingsValues() {}
 
+    public static String normalizeChoice(String key, Object value, String fallback) {
+        if (value instanceof String) {
+            String selected = (String) value;
+            return isSupported(key, selected) ? selected : fallback;
+        }
+        if (value instanceof Boolean && "show_seconds".equals(key)) return value.toString();
+        return fallback;
+    }
+
     public static boolean isSupported(String key, String value) {
         if (key == null || value == null) return false;
         if ("palette".equals(key)) return oneOf(value, "day", "sunset", "night", "random");
