@@ -21,10 +21,17 @@ public final class SettingsValues {
         if ("clock_drift".equals(key)) return oneOf(value, "anchored", "short", "wide", "random");
         if ("clock_format".equals(key)) return oneOf(value, "12h", "24h", "random");
         if ("show_seconds".equals(key)) return oneOf(value, "true", "false", "random");
-        if ("randomize_all".equals(key)) {
+        if ("randomize_all".equals(key) || "show_clock".equals(key)) {
             return oneOf(value, "true", "false");
         }
         return false;
+    }
+
+    public static boolean booleanValue(Object value, boolean fallback) {
+        if (value instanceof Boolean) return (Boolean) value;
+        if ("true".equals(value)) return true;
+        if ("false".equals(value)) return false;
+        return fallback;
     }
 
     private static boolean oneOf(String value, String... allowed) {

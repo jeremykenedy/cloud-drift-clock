@@ -57,7 +57,7 @@ public final class ClockOptionsTest {
         boolean sawNoSeconds = false;
         for (int i = 0; i < 12; i++) {
             ClockOptions random = ClockOptions.resolve("random", "random", "random", "random",
-                    "random", "random", "random", false, new Random(i));
+                    "random", "random", "random", true, false, new Random(i));
             assertTrue(random.palette >= 0 && random.palette <= 2);
             assertTrue(random.cloudSpeed >= 0.55f && random.cloudSpeed <= 1.35f);
             assertTrue(random.cloudCount == 8 || random.cloudCount == 14 || random.cloudCount == 20);
@@ -68,7 +68,7 @@ public final class ClockOptionsTest {
         }
         assertTrue(sawSeconds && sawNoSeconds);
         ClockOptions all = ClockOptions.resolve("day", "slow", "light", "subtle", "anchored",
-                "12h", "false", true, new Random(15));
+                "12h", "false", true, true, new Random(15));
         assertTrue(all.palette >= 0 && all.palette <= 2);
         assertTrue(all.cloudCount == 8 || all.cloudCount == 14 || all.cloudCount == 20);
     }
@@ -76,7 +76,7 @@ public final class ClockOptionsTest {
     @Test
     public void invalidChoicesUseDocumentedDefaults() {
         ClockOptions options = ClockOptions.resolve("bad", "bad", "bad", "bad", "bad", "bad",
-                "bad", false, new Random(1));
+                "bad", true, false, new Random(1));
         assertEquals(0, options.palette);
         assertEquals(0.55f, options.cloudSpeed, 0.0f);
         assertEquals(8, options.cloudCount);
@@ -96,7 +96,8 @@ public final class ClockOptionsTest {
             {"clock_drift", "anchored", "short", "wide", "random"},
             {"clock_format", "12h", "24h", "random"},
             {"show_seconds", "true", "false", "random"},
-            {"randomize_all", "true", "false"}
+            {"randomize_all", "true", "false"},
+            {"show_clock", "true", "false"}
         };
         for (String[] row : supported) {
             for (int i = 1; i < row.length; i++) assertTrue(SettingsValues.isSupported(row[0], row[i]));
@@ -118,12 +119,33 @@ public final class ClockOptionsTest {
         assertEquals("day", SettingsValues.normalizeChoice("palette", null, "day"));
     }
 
+    @Test
+    public void clockVisibilityIsExplicitEvenWhenEveryOtherSettingIsRandom() {
+        for (int seed = 0; seed < 32; seed++) {
+            ClockOptions hidden = ClockOptions.resolve("random", "random", "random", "random",
+                    "random", "random", "random", false, true, new Random(seed));
+            assertFalse(hidden.showClock);
+            ClockOptions visible = ClockOptions.resolve("random", "random", "random", "random",
+                    "random", "random", "random", true, true, new Random(seed));
+            assertTrue(visible.showClock);
+        }
+        assertFalse(SettingsValues.isSupported("show_clock", "random"));
+        assertTrue(SettingsValues.booleanValue(null, true));
+        assertFalse(SettingsValues.booleanValue(null, false));
+        assertTrue(SettingsValues.booleanValue(Boolean.TRUE, false));
+        assertFalse(SettingsValues.booleanValue(Boolean.FALSE, true));
+        assertTrue(SettingsValues.booleanValue("true", false));
+        assertFalse(SettingsValues.booleanValue("false", true));
+        assertTrue(SettingsValues.booleanValue("invalid", true));
+        assertFalse(SettingsValues.booleanValue(1, false));
+    }
+
     private static void assertOptions(String palette, String speed, String density, String size,
             String drift, String format, String seconds, int expectedPalette, float expectedSpeed,
             int expectedCount, int expectedSize, int expectedDrift, boolean expected24Hour,
             boolean expectedSeconds) {
         ClockOptions options = ClockOptions.resolve(palette, speed, density, size, drift, format,
-                seconds, false, new Random(1));
+                seconds, true, false, new Random(1));
         assertEquals(expectedPalette, options.palette);
         assertEquals(expectedSpeed, options.cloudSpeed, 0.0f);
         assertEquals(expectedCount, options.cloudCount);

@@ -46,7 +46,7 @@ public final class SettingsProvider extends ContentProvider {
         Context context = getContext();
         if (context == null) return 0;
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        if ("randomize_all".equals(key)) {
+        if ("randomize_all".equals(key) || "show_clock".equals(key)) {
             editor.putBoolean(key, Boolean.parseBoolean(value));
         } else {
             editor.putString(key, value);
@@ -60,11 +60,12 @@ public final class SettingsProvider extends ContentProvider {
         addChoice(cursor, "palette", "Sky palette", "day", "day|sunset|night|random");
         addChoice(cursor, "density", "Cloud density", "balanced", "light|balanced|full|random");
         addChoice(cursor, "speed", "Cloud motion", "gentle", "slow|gentle|drifting|random");
+        cursor.addRow(new Object[] {"show_clock", "Show clock", "boolean", "true", "true|false", false});
         addChoice(cursor, "clock_size", "Clock size", "standard", "subtle|standard|large|random");
         addChoice(cursor, "clock_drift", "Clock movement", "short", "anchored|short|wide|random");
         addChoice(cursor, "clock_format", "Time format", "12h", "12h|24h|random");
         addChoice(cursor, "show_seconds", "Show seconds", "false", "false|true|random");
-        cursor.addRow(new Object[] {"randomize_all", "Randomize every setting on start", "boolean", "false", "true|false", false});
+        cursor.addRow(new Object[] {"randomize_all", "Randomize scene and clock style on start", "boolean", "false", "true|false", false});
         return cursor;
     }
 
@@ -79,6 +80,7 @@ public final class SettingsProvider extends ContentProvider {
         addValue(cursor, "palette", SettingsValues.normalizeChoice("palette", p.getAll().get("palette"), "day"));
         addValue(cursor, "density", SettingsValues.normalizeChoice("density", p.getAll().get("density"), "balanced"));
         addValue(cursor, "speed", SettingsValues.normalizeChoice("speed", p.getAll().get("speed"), "gentle"));
+        addValue(cursor, "show_clock", Boolean.toString(SettingsValues.booleanValue(p.getAll().get("show_clock"), true)));
         addValue(cursor, "clock_size", SettingsValues.normalizeChoice("clock_size", p.getAll().get("clock_size"), "standard"));
         addValue(cursor, "clock_drift", SettingsValues.normalizeChoice("clock_drift", p.getAll().get("clock_drift"), "short"));
         addValue(cursor, "clock_format", SettingsValues.normalizeChoice("clock_format", p.getAll().get("clock_format"), "12h"));

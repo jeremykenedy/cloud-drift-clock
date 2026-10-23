@@ -55,6 +55,7 @@ public final class SettingsActivity extends Activity {
         addChoice(content, "Cloud motion", "speed",
                 new String[] {"slow", "gentle", "drifting", "random"},
                 new String[] {"Slow", "Gentle", "Drifting", "Random"}, "gentle");
+        addCheckBox(content, "Show clock", "show_clock", true);
         addChoice(content, "Clock size", "clock_size",
                 new String[] {"subtle", "standard", "large", "random"},
                 new String[] {"Subtle", "Standard", "Large", "Random"}, "standard");
@@ -67,7 +68,7 @@ public final class SettingsActivity extends Activity {
         addChoice(content, "Show seconds", "show_seconds",
                 new String[] {"false", "true", "random"},
                 new String[] {"Off", "On", "Random"}, "false");
-        addCheckBox(content, "Randomize every setting when the screensaver starts", "randomize_all", false);
+        addCheckBox(content, "Randomize scene and clock style when the screensaver starts", "randomize_all", false);
         setContentView(scroll);
     }
 
@@ -111,7 +112,7 @@ public final class SettingsActivity extends Activity {
         CheckBox checkBox = new CheckBox(this);
         checkBox.setText(title);
         checkBox.setTextSize(18);
-        checkBox.setChecked(preferences.getBoolean(key, fallback));
+        checkBox.setChecked(SettingsValues.booleanValue(preferences.getAll().get(key), fallback));
         checkBox.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(android.widget.CompoundButton button, boolean checked) {

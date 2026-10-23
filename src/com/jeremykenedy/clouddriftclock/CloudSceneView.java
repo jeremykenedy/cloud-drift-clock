@@ -62,7 +62,7 @@ final class CloudSceneView extends View {
         if (getWidth() <= 0 || getHeight() <= 0 || cloudscape == null) return;
         float time = (SystemClock.uptimeMillis() - startedAt) / 1000f;
         drawCloudscape(canvas, time);
-        drawClock(canvas, time);
+        if (options.showClock) drawClock(canvas, time);
         if (running) postDelayed(invalidator, 33L);
     }
 
@@ -80,6 +80,7 @@ final class CloudSceneView extends View {
                 SettingsValues.normalizeChoice("clock_drift", preferences.getAll().get("clock_drift"), "short"),
                 SettingsValues.normalizeChoice("clock_format", preferences.getAll().get("clock_format"), "12h"),
                 SettingsValues.normalizeChoice("show_seconds", preferences.getAll().get("show_seconds"), "false"),
+                SettingsValues.booleanValue(preferences.getAll().get("show_clock"), true),
                 preferences.getBoolean("randomize_all", false),
                 new Random(System.currentTimeMillis()));
     }

@@ -10,9 +10,10 @@ public final class ClockOptions {
     public final int drift;
     public final boolean use24Hour;
     public final boolean showSeconds;
+    public final boolean showClock;
 
     private ClockOptions(int palette, float cloudSpeed, int cloudCount, int clockSize,
-            int drift, boolean use24Hour, boolean showSeconds) {
+            int drift, boolean use24Hour, boolean showSeconds, boolean showClock) {
         this.palette = palette;
         this.cloudSpeed = cloudSpeed;
         this.cloudCount = cloudCount;
@@ -20,10 +21,11 @@ public final class ClockOptions {
         this.drift = drift;
         this.use24Hour = use24Hour;
         this.showSeconds = showSeconds;
+        this.showClock = showClock;
     }
 
     public static ClockOptions resolve(String palette, String speed, String density,
-            String size, String drift, String format, String seconds, boolean randomizeAll,
+            String size, String drift, String format, String seconds, boolean showClock, boolean randomizeAll,
             Random random) {
         return new ClockOptions(
                 paletteValue(choose(palette, randomizeAll, random, "day", "sunset", "night")),
@@ -32,7 +34,8 @@ public final class ClockOptions {
                 sizeValue(choose(size, randomizeAll, random, "subtle", "standard", "large")),
                 driftValue(choose(drift, randomizeAll, random, "anchored", "short", "wide")),
                 "24h".equals(choose(format, randomizeAll, random, "12h", "24h")),
-                "true".equals(choose(seconds, randomizeAll, random, "false", "true")));
+                "true".equals(choose(seconds, randomizeAll, random, "false", "true")),
+                showClock);
     }
 
     private static String choose(String selected, boolean randomizeAll, Random random,
