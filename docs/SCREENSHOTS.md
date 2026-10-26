@@ -5,9 +5,9 @@ These version 2 captures are actual physical Fire TV AFTALMO output, API 28, 192
 <table>
 <tr><th>Clock Off</th><th>Clock On</th><th>Drift</th></tr>
 <tr><td><img src="../art/screenshots/cloud-flight-preview-final-fire-tv-api28.png" alt="Word-free real cloud flight" width="280"></td><td><img src="../art/screenshots/cloud-flight-clock-on-fire-tv-api28.png" alt="Intentional optional local clock" width="280"></td><td><img src="../art/screenshots/cloud-flight-clock-drift-fire-tv-api28.png" alt="Clock drift after fifteen seconds" width="280"></td></tr>
-<tr><th>Dream Off</th><th>Dream On</th><th>Settings</th></tr>
+<tr><th>Dream Off</th><th>Dream On</th><th>Setup</th></tr>
 <tr><td><img src="../art/screenshots/cloud-flight-dream-clock-off-fire-tv-api28.png" alt="Actual normal Dream after five minutes, clock off" width="280"></td><td><img src="../art/screenshots/cloud-flight-dream-clock-on-fire-tv-api28.png" alt="Actual normal Dream after five minutes, clock on" width="280"></td><td><img src="../art/screenshots/cloud-flight-settings-final-fire-tv-api28.png" alt="Seven effective native controls" width="280"></td></tr>
-<tr><th>Credits</th><th>Licenses</th><th></th></tr>
+<tr><th>Credit</th><th>Terms</th><th></th></tr>
 <tr><td><img src="../art/screenshots/cloud-flight-credits-fire-tv-api28.png" alt="Offline media attribution outside the scene with Close focused" width="280"></td><td><img src="../art/screenshots/cloud-flight-credits-scroll-fire-tv-api28.png" alt="Full license text after native scrolling" width="280"></td><td></td></tr>
 </table>
 
