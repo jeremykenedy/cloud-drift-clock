@@ -46,19 +46,19 @@ The clock keeps its earlier On default. Turn **Show clock** off for a scene with
 
 ## Features
 
-| Feature | What it provides | Guide |
-| --- | --- | --- |
-| Real cloud flight | Bundled 1080p film and 720p decoder fallback | [Footage and license](docs/ARTWORK.md) |
-| Optional clock | Visibility, size, movement, format and seconds | [Configuration](docs/CONFIGURATION.md) |
-| Playback control | Actual 0.75x, 1x and 1.25x speed, with Random | [Configuration](docs/CONFIGURATION.md) |
-| Remote navigation | Native settings, Preview and offline Credits | [Screenshots](docs/SCREENSHOTS.md) |
-| Existing preferences | Same package, signer and nine provider keys; legacy palette/density remain stored but inactive | [Provider](docs/SETTINGS_PROVIDER.md) |
-| Offline privacy | No Internet permission, advertising or reporting SDK | [Privacy](docs/PRIVACY.md) |
+| Feature | What it provides |
+| --- | --- |
+| [Real flight](docs/ARTWORK.md) | Bundled 1080p film and 720p decoder fallback |
+| [Clock](docs/CONFIGURATION.md) | Visibility, size, movement, format and seconds |
+| [Playback](docs/CONFIGURATION.md) | Actual 0.75x, 1x and 1.25x speed, with Random |
+| [Remote controls](docs/SCREENSHOTS.md) | Native settings, Preview and offline Credits |
+| [Saved settings](docs/SETTINGS_PROVIDER.md) | Nine retained keys; palette and density are inactive |
+| [Privacy](docs/PRIVACY.md) | No Internet permission, advertising or reporting SDK |
 
 ## Screenshots
 
 <table>
-  <tr><th>Flight without a clock</th><th>Optional clock</th><th>Independent clock drift</th></tr>
+  <tr><th>Clock Off</th><th>Clock On</th><th>Clock drift</th></tr>
   <tr><td><img src="art/screenshots/cloud-flight-preview-final-fire-tv-api28.png" alt="Real sunset clouds passing close to the camera with no scene text" width="280"></td><td><img src="art/screenshots/cloud-flight-clock-on-fire-tv-api28.png" alt="Large 24-hour clock with seconds over the real cloud flight" width="280"></td><td><img src="art/screenshots/cloud-flight-clock-drift-fire-tv-api28.png" alt="The optional clock has moved toward the right as the filmed flight continues" width="280"></td></tr>
 </table>
 
