@@ -1,129 +1,157 @@
 package com.jeremykenedy.clouddriftclock;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Typeface;
-import android.os.SystemClock;
-import android.preference.PreferenceManager;
-import android.view.View;
+import android.content.res.AssetFileDescriptor;
+import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.util.Log;
+import android.view.Gravity;
+import android.graphics.SurfaceTexture;
+import android.view.Surface;
+import android.view.TextureView;
+import android.widget.FrameLayout;
+import java.io.IOException;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Random;
+final class CloudSceneView extends FrameLayout implements TextureView.SurfaceTextureListener {
+    private final TextureView surface;
+    private Surface videoSurface;
+    private final Runnable playbackFailed;
+    private final FlightOptions flight;
+    private final ClockOverlay clock;
+    private MediaPlayer player;
+    private boolean resumed;
+    private boolean fallback;
+    private int position;
 
-final class CloudSceneView extends View {
-    private final Paint bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-    private final Paint foregroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-    private final Paint clockPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Rect source = new Rect();
-    private final Rect foregroundSource = new Rect();
-    private final RectF destination = new RectF();
-    private final RectF foregroundDestination = new RectF();
-    private final Bitmap cloudscape;
-    private ClockOptions options;
-    private long startedAt;
-    private boolean running;
-
-    CloudSceneView(Context context) {
+    CloudSceneView(Context context, Runnable playbackFailed) {
         super(context);
-        setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        cloudscape = BitmapFactory.decodeResource(getResources(), R.drawable.cloudscape);
-        loadOptions();
-    }
-
-    void start() {
-        if (!running) {
-            running = true;
-            startedAt = SystemClock.uptimeMillis();
-            postInvalidateOnAnimation();
-        }
-    }
-
-    void stop() {
-        running = false;
-        removeCallbacks(invalidator);
-    }
-
-    void release() {
-        stop();
-        if (cloudscape != null && !cloudscape.isRecycled()) cloudscape.recycle();
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        if (getWidth() <= 0 || getHeight() <= 0 || cloudscape == null) return;
-        float time = (SystemClock.uptimeMillis() - startedAt) / 1000f;
-        drawCloudscape(canvas, time);
-        if (options.showClock) drawClock(canvas, time);
-        if (running) postDelayed(invalidator, 33L);
-    }
-
-    private final Runnable invalidator = new Runnable() {
-        @Override public void run() { if (running) invalidate(); }
-    };
-
-    private void loadOptions() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        options = ClockOptions.resolve(
-                SettingsValues.normalizeChoice("palette", preferences.getAll().get("palette"), "day"),
-                SettingsValues.normalizeChoice("speed", preferences.getAll().get("speed"), "gentle"),
-                SettingsValues.normalizeChoice("density", preferences.getAll().get("density"), "balanced"),
+        this.playbackFailed = playbackFailed;
+        android.content.SharedPreferences preferences = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
+        java.util.Random random = new java.util.Random();
+        boolean randomize = SettingsValues.booleanValue(preferences.getAll().get("randomize_all"), false);
+        flight = FlightOptions.resolve(
+                SettingsValues.normalizeChoice("speed", preferences.getAll().get("speed"), "gentle"), randomize, random);
+        ClockOptions options = ClockOptions.resolve("day", "gentle", "balanced",
                 SettingsValues.normalizeChoice("clock_size", preferences.getAll().get("clock_size"), "standard"),
                 SettingsValues.normalizeChoice("clock_drift", preferences.getAll().get("clock_drift"), "short"),
                 SettingsValues.normalizeChoice("clock_format", preferences.getAll().get("clock_format"), "12h"),
                 SettingsValues.normalizeChoice("show_seconds", preferences.getAll().get("show_seconds"), "false"),
-                SettingsValues.booleanValue(preferences.getAll().get("show_clock"), true),
-                preferences.getBoolean("randomize_all", false),
-                new Random(System.currentTimeMillis()));
+                SettingsValues.booleanValue(preferences.getAll().get("show_clock"), true), randomize, random);
+        clock = new ClockOverlay(context, options);
+        setBackgroundColor(Color.BLACK);
+        surface = new TextureView(context);
+        addView(surface, new FrameLayout.LayoutParams(-1, -1, Gravity.CENTER));
+        surface.setSurfaceTextureListener(this);
+        addView(clock, new FrameLayout.LayoutParams(-1, -1));
+        addOnLayoutChangeListener((v, l, t, r, b, ol, ot, or, ob) -> fit(r-l, b-t));
     }
 
-    private void drawCloudscape(Canvas canvas, float time) {
-        int width = cloudscape.getWidth();
-        int height = cloudscape.getHeight();
-        int cropTop = CloudLayout.sourceTop(options.cloudCount, height);
-        source.set(0, cropTop, width, height);
-        float driftX = CloudLayout.cameraX(time, options.cloudSpeed, getWidth());
-        float driftY = CloudLayout.cameraY(time, options.cloudSpeed, getHeight());
-        destination.set(-getWidth() * 0.035f + driftX, -getHeight() * 0.035f + driftY,
-                getWidth() * 1.035f + driftX, getHeight() * 1.035f + driftY);
-        canvas.drawBitmap(cloudscape, source, destination, bitmapPaint);
-        drawForegroundCloudLayer(canvas, time);
-        int overlay = CloudLayout.paletteOverlay(options.palette);
-        if (overlay != 0) canvas.drawColor(overlay);
+    void start() {
+        resumed = true;
+        clock.start();
+        preparePlayer();
     }
 
-    private void drawForegroundCloudLayer(Canvas canvas, float time) {
-        int alpha = CloudLayout.foregroundAlpha(options.cloudCount);
-        if (alpha == 0) return;
-        foregroundSource.set(0, cloudscape.getHeight() / 2, cloudscape.getWidth(), cloudscape.getHeight());
-        float drift = CloudLayout.foregroundX(time, options.cloudSpeed, getWidth());
-        float top = getHeight() * 0.45f;
-        foregroundDestination.set(-getWidth() * 0.045f + drift, top,
-                getWidth() * 1.045f + drift, getHeight() * 1.16f);
-        foregroundPaint.setAlpha(alpha);
-        canvas.drawBitmap(cloudscape, foregroundSource, foregroundDestination, foregroundPaint);
-        foregroundPaint.setAlpha(255);
+    void stop() {
+        resumed = false;
+        clock.stop();
+        releasePlayer();
     }
 
-    private void drawClock(Canvas canvas, float time) {
-        float cx = CloudLayout.clockX(time, getWidth(), options.drift);
-        float cy = CloudLayout.clockY(time, getHeight(), options.drift);
-        String pattern = CloudLayout.timePattern(options.use24Hour, options.showSeconds);
-        String value = new SimpleDateFormat(pattern, Locale.getDefault()).format(new Date());
-        clockPaint.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-        clockPaint.setTextAlign(Paint.Align.CENTER);
-        clockPaint.setTextSize(getHeight() * options.clockSize / 720f);
-        clockPaint.setColor(CloudLayout.clockColor(options.palette));
-        clockPaint.setShadowLayer(14f, 0f, 3f, CloudLayout.shadowColor(options.palette));
-        canvas.drawText(value, cx, cy, clockPaint);
-        clockPaint.clearShadowLayer();
+    void release() { stop(); }
+
+    private void fit(int width, int height) {
+        if (width <= 0 || height <= 0) return;
+        int fittedWidth = Math.min(width, height * 16 / 9);
+        int fittedHeight = fittedWidth * 9 / 16;
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) surface.getLayoutParams();
+        if (params.width != fittedWidth || params.height != fittedHeight) {
+            params.width = fittedWidth;
+            params.height = fittedHeight;
+            params.gravity = Gravity.CENTER;
+            surface.setLayoutParams(params);
+        }
+    }
+
+    @Override public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
+        videoSurface = new Surface(texture);
+        preparePlayer();
+    }
+
+    @Override public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {}
+
+    @Override public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
+        releasePlayer();
+        if (videoSurface != null) videoSurface.release();
+        videoSurface = null;
+        return true;
+    }
+
+    @Override public void onSurfaceTextureUpdated(SurfaceTexture texture) {}
+
+    private void preparePlayer() {
+        if (!resumed || player != null || (videoSurface == null || !videoSurface.isValid())) return;
+        MediaPlayer next = new MediaPlayer();
+        player = next;
+        next.setSurface(videoSurface);
+        next.setVolume(0, 0);
+        next.setLooping(true);
+        next.setOnPreparedListener(ready -> {
+            if (player != ready || !resumed) return;
+            ready.setPlaybackParams(new android.media.PlaybackParams().setSpeed(flight.playbackSpeed));
+            if (position > 0) {
+                ready.setOnSeekCompleteListener(seeked -> {
+                    if (player == seeked && resumed) seeked.start();
+                });
+                ready.seekTo(position);
+            } else {
+                ready.start();
+            }
+            Log.i("CloudPlayback", "Started " + (fallback ? "720p" : "1080p")
+                    + " durationMs=" + ready.getDuration() + " metrics=" + metrics(ready));
+        });
+        next.setOnErrorListener((failed, what, extra) -> {
+            if (player != failed) return true;
+            Log.e("CloudPlayback", "Decoder error " + what + "/" + extra);
+            releasePlayer();
+            if (!fallback && resumed) {
+                fallback = true;
+                position = 0;
+                preparePlayer();
+            } else if (resumed) {
+                playbackFailed.run();
+            }
+            return true;
+        });
+        try (AssetFileDescriptor file = getContext().getAssets().openFd(
+                fallback ? "clouds-720.mp4" : "clouds-1080.mp4")) {
+            next.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+            next.prepareAsync();
+        } catch (IOException error) {
+            Log.e("CloudPlayback", "Bundled media unavailable", error);
+            releasePlayer();
+            playbackFailed.run();
+        }
+    }
+
+    private String metrics(MediaPlayer current) {
+        return android.os.Build.VERSION.SDK_INT >= 26 ? current.getMetrics().toString() : "unavailable before API 26";
+    }
+
+    private void releasePlayer() {
+        MediaPlayer current = player;
+        player = null;
+        if (current == null) return;
+        try {
+            position = current.getCurrentPosition();
+            Log.i("CloudPlayback", "Released positionMs=" + position
+                    + " metrics=" + metrics(current));
+        } catch (IllegalStateException ignored) {
+            // Surface loss may happen before asynchronous preparation completes.
+        }
+        current.setOnPreparedListener(null);
+        current.setOnErrorListener(null);
+        current.setOnSeekCompleteListener(null);
+        current.release();
     }
 }

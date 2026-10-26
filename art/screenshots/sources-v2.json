@@ -1,0 +1,120 @@
+{
+  "status": "Final code5 exact APK native Credits/Off Preview/Back and strict restore passed; code4 rendering/clock/normalDream evidence applies to unchanged renderer.",
+  "footage": "anotherview, https://www.youtube.com/watch?v=kKPvF0rwqHA, CC BY 3.0; source excerpt, encoding and edited dissolve described in NOTICE.",
+  "images": [
+    {
+      "file": "cloud-flight-preview-clock-off-fire-tv-api28.png",
+      "capture_utc": "2026-10-26T00:27:11.747590+00:00",
+      "sha256": "883078a6ff1c5d4fd5b93593c47d38a06acc164ccc12e592f959ba9b47b9355f",
+      "width": 1920,
+      "height": 1080,
+      "candidate_sha256": "37302d097a236fc254d6160a40c89d931b4b3b331bb481a549ee018a023dd25b",
+      "platform": "AFTALMO\nAPI 28",
+      "method": "Actual physical native screencap; original pixels, no image editing",
+      "options": "Clock off with randomization ON"
+    },
+    {
+      "file": "cloud-flight-clock-on-fire-tv-api28.png",
+      "capture_utc": "2026-10-26T00:29:09.140182+00:00",
+      "sha256": "f43a1d31e3c6d33966d939b8d19d73c4f9d9fb5d8cf1a31cacb39e548e39e8ed",
+      "width": 1920,
+      "height": 1080,
+      "candidate_sha256": "37302d097a236fc254d6160a40c89d931b4b3b331bb481a549ee018a023dd25b",
+      "platform": "AFTALMO\nAPI 28",
+      "method": "Actual physical native screencap; original pixels, no image editing",
+      "options": "Clock ON, large, wide drift,24h+seconds,1.25x,randomizationOFF"
+    },
+    {
+      "file": "cloud-flight-clock-drift-fire-tv-api28.png",
+      "capture_utc": "2026-10-26T00:29:24.739577+00:00",
+      "sha256": "4c5cdb45b6c0e41543ad0cbf6be0ca7441985993dfa20a0fe2af9a578a8942af",
+      "width": 1920,
+      "height": 1080,
+      "candidate_sha256": "37302d097a236fc254d6160a40c89d931b4b3b331bb481a549ee018a023dd25b",
+      "platform": "AFTALMO\nAPI 28",
+      "method": "Actual physical native screencap; original pixels, no image editing",
+      "options": "Clock ON, large, wide drift,24h+seconds,1.25x,randomizationOFF"
+    },
+    {
+      "file": "cloud-flight-settings-fire-tv-api28.png",
+      "capture_utc": "2026-10-26T00:26:41.765937+00:00",
+      "sha256": "c6abacd72cdb85b77fe59f5d2f4e40c187fe24f27cb103c34a11a226729accda",
+      "width": 1920,
+      "height": 1080,
+      "candidate_sha256": "37302d097a236fc254d6160a40c89d931b4b3b331bb481a549ee018a023dd25b",
+      "platform": "AFTALMO\nAPI 28",
+      "method": "Actual physical native screencap; original pixels, no image editing",
+      "options": "Native changed settings after seven D-pad controls; values are stored choices, not all randomized resolved values"
+    },
+    {
+      "file": "cloud-flight-dream-clock-off-fire-tv-api28.png",
+      "capture_utc": "2026-10-26T00:36:39.245276+00:00",
+      "sha256": "77667a87306080be99d0bcc416ef382b7ecc5576f3f7122a6ec5572de4a734fd",
+      "width": 1920,
+      "height": 1080,
+      "candidate_sha256": "37302d097a236fc254d6160a40c89d931b4b3b331bb481a549ee018a023dd25b",
+      "platform": "FireTVAFTALMO/API28",
+      "method": "Actual native non-testDream after unchanged300s idle; originalPNG pixels",
+      "options": "0.75x playback, clock Off, normal non-test Dream"
+    },
+    {
+      "file": "cloud-flight-dream-clock-on-fire-tv-api28.png",
+      "capture_utc": "2026-10-26T00:42:02.267638+00:00",
+      "sha256": "7c588912fabd630cdf1d9eefd8a52bf2dcdac4a374ce96fae62e8236a0046560",
+      "width": 1920,
+      "height": 1080,
+      "candidate_sha256": "37302d097a236fc254d6160a40c89d931b4b3b331bb481a549ee018a023dd25b",
+      "platform": "FireTVAFTALMO/API28",
+      "method": "Actual native non-testDream after unchanged300s idle; originalPNG pixels",
+      "options": "1.25x playback, clock On, normal non-test Dream"
+    },
+    {
+      "file": "cloud-flight-settings-final-fire-tv-api28.png",
+      "capture_utc": "2026-10-26T00:59:05.156138+00:00",
+      "sha256": "5a88ac5c3df9c58291a607533a41b4951568f1bd2763ae2d615f582ef91b9a21",
+      "width": 1920,
+      "height": 1080,
+      "candidate_sha256": "abb8fdf3abdd1c94b95106b6bd0cbdf85822ccffd4caec9cdbd6dcb99919fae8",
+      "version": "2.0.0/code5",
+      "platform": "Fire TV AFTALMO / API 28",
+      "method": "Actual native screencap; original pixels",
+      "options": "Final native Credits/settings UI"
+    },
+    {
+      "file": "cloud-flight-credits-fire-tv-api28.png",
+      "capture_utc": "2026-10-26T00:59:37.632213+00:00",
+      "sha256": "788d219797aa1d6e84bf3ce22993df0f8720d38ed91a080fc1c5a0d188bf53c1",
+      "width": 1920,
+      "height": 1080,
+      "candidate_sha256": "abb8fdf3abdd1c94b95106b6bd0cbdf85822ccffd4caec9cdbd6dcb99919fae8",
+      "version": "2.0.0/code5",
+      "platform": "Fire TV AFTALMO / API 28",
+      "method": "Actual native screencap; original pixels",
+      "options": "Final native Credits/settings UI"
+    },
+    {
+      "file": "cloud-flight-credits-scroll-fire-tv-api28.png",
+      "capture_utc": "2026-10-26T00:59:42.493626+00:00",
+      "sha256": "018ee76c9dbaaba3b224be7c1f2d84df7a18859c367ce97a4f991b98f14eeb32",
+      "width": 1920,
+      "height": 1080,
+      "candidate_sha256": "abb8fdf3abdd1c94b95106b6bd0cbdf85822ccffd4caec9cdbd6dcb99919fae8",
+      "version": "2.0.0/code5",
+      "platform": "Fire TV AFTALMO / API 28",
+      "method": "Actual native screencap; original pixels",
+      "options": "Final native Credits/settings UI"
+    },
+    {
+      "file": "cloud-flight-preview-final-fire-tv-api28.png",
+      "capture_utc": "2026-10-26T01:00:29.573970+00:00",
+      "sha256": "8169a2175b2b4b9552e24691bbb404b2405ee7dd78dce51f2dd3a9fc08227993",
+      "width": 1920,
+      "height": 1080,
+      "candidate_sha256": "abb8fdf3abdd1c94b95106b6bd0cbdf85822ccffd4caec9cdbd6dcb99919fae8",
+      "version": "2.0.0/code5",
+      "platform": "Fire TV AFTALMO / API 28",
+      "method": "Actual native screencap; original pixels",
+      "options": "Clock Off; actual final APK Preview"
+    }
+  ]
+}
