@@ -13,7 +13,7 @@ java { sourceCompatibility = JavaVersion.VERSION_1_8; targetCompatibility = Java
 sourceSets {
     main.java {
         srcDirs = ['../src/com/jeremykenedy/clouddriftclock']
-        include 'ClockOptions.java', 'CloudLayout.java', 'SettingsValues.java'
+        include 'ClockOptions.java', 'CloudLayout.java', 'SettingsValues.java', 'FlightOptions.java'
     }
     test.java { srcDirs = ['../coverage-tests', '../tests'] }
 }

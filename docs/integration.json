@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "saver_id": "cloud-drift-clock",
+  "name": "Cloud Drift Clock",
+  "repository": "https://github.com/jeremykenedy/cloud-drift-clock",
+  "package": "com.jeremykenedy.clouddriftclock",
+  "dream": "com.jeremykenedy.clouddriftclock/.CloudDreamService",
+  "settings_activity": "com.jeremykenedy.clouddriftclock/.SettingsActivity",
+  "preview_activity": "com.jeremykenedy.clouddriftclock/.PreviewActivity",
+  "release_version": "2.0.0",
+  "version_code": 5,
+  "min_sdk": 23,
+  "target_sdk": 36,
+  "apk": {
+    "name": "cloud-drift-clock.apk",
+    "url": "https://github.com/jeremykenedy/cloud-drift-clock/releases/download/v2.0.0/cloud-drift-clock.apk",
+    "sha256": "abb8fdf3abdd1c94b95106b6bd0cbdf85822ccffd4caec9cdbd6dcb99919fae8",
+    "bytes": 40297575,
+    "checksum_url": "https://github.com/jeremykenedy/cloud-drift-clock/releases/download/v2.0.0/cloud-drift-clock.apk.sha256",
+    "signer_sha256": "890c8ebb6f983d619d5390536995c5533aecc20b837ef404c53916ab74fba20e"
+  },
+  "preview": {
+    "path": "art/screenshots/cloud-flight-preview-final-fire-tv-api28.png",
+    "url": "https://raw.githubusercontent.com/jeremykenedy/cloud-drift-clock/v2.0.0/art/screenshots/cloud-flight-preview-final-fire-tv-api28.png",
+    "sha256": "8169a2175b2b4b9552e24691bbb404b2405ee7dd78dce51f2dd3a9fc08227993",
+    "capture": "Actual final code5 Fire TV AFTALMO/API28 Preview,1920x1080,clockOff"
+  },
+  "settings": {
+    "schema": "content://com.jeremykenedy.clouddriftclock.settings/schema",
+    "values": "content://com.jeremykenedy.clouddriftclock.settings/settings",
+    "provider_rows": 9,
+    "effective_controls": 7,
+    "active_keys": [
+      "speed",
+      "show_clock",
+      "clock_size",
+      "clock_drift",
+      "clock_format",
+      "show_seconds",
+      "randomize_all"
+    ],
+    "retained_inactive_keys": [
+      "palette",
+      "density"
+    ],
+    "default_show_clock": true,
+    "randomize_visibility": false,
+    "speed_mapping": {
+      "slow": 0.75,
+      "gentle": 1,
+      "drifting": 1.25
+    }
+  },
+  "media": {
+    "scene": "One real cinematic sunset cloud flight",
+    "output": "1080p H264 with720p fallback",
+    "source_fps": 25,
+    "loop_seconds": 34,
+    "dissolve_seconds": 1.2,
+    "native_4k_claim": false,
+    "credit": "anotherview,CC BY3.0,primary sourcehttps://www.youtube.com/watch?v=kKPvF0rwqHA; source audio omitted"
+  },
+  "runtime_network": false,
+  "analytics": false
+}

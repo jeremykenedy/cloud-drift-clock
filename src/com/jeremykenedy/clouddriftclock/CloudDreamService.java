@@ -11,7 +11,7 @@ public final class CloudDreamService extends DreamService {
         setInteractive(false);
         setFullscreen(true);
         setScreenBright(false);
-        scene = new CloudSceneView(this);
+        scene = new CloudSceneView(this, this::finish);
         setContentView(scene);
     }
 

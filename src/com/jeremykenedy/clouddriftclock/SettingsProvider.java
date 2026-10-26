@@ -51,21 +51,21 @@ public final class SettingsProvider extends ContentProvider {
         } else {
             editor.putString(key, value);
         }
-        editor.apply();
+        if (!editor.commit()) throw new IllegalStateException("Could not save setting");
         return 1;
     }
 
     private Cursor schemaCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[] {"key", "title", "type", "default", "choices", "randomAllowed"});
-        addChoice(cursor, "palette", "Sky palette", "day", "day|sunset|night|random");
-        addChoice(cursor, "density", "Cloud density", "balanced", "light|balanced|full|random");
-        addChoice(cursor, "speed", "Cloud motion", "gentle", "slow|gentle|drifting|random");
+        addChoice(cursor, "palette", "Legacy palette (retained, inactive)", "day", "day|sunset|night|random");
+        addChoice(cursor, "density", "Legacy density (retained, inactive)", "balanced", "light|balanced|full|random");
+        addChoice(cursor, "speed", "Playback speed: slow=0.75x, gentle=1x, drifting=1.25x", "gentle", "slow|gentle|drifting|random");
         cursor.addRow(new Object[] {"show_clock", "Show clock", "boolean", "true", "true|false", false});
         addChoice(cursor, "clock_size", "Clock size", "standard", "subtle|standard|large|random");
         addChoice(cursor, "clock_drift", "Clock movement", "short", "anchored|short|wide|random");
         addChoice(cursor, "clock_format", "Time format", "12h", "12h|24h|random");
         addChoice(cursor, "show_seconds", "Show seconds", "false", "false|true|random");
-        cursor.addRow(new Object[] {"randomize_all", "Randomize scene and clock style on start", "boolean", "false", "true|false", false});
+        cursor.addRow(new Object[] {"randomize_all", "Randomize playback speed and clock style on start", "boolean", "false", "true|false", false});
         return cursor;
     }
 

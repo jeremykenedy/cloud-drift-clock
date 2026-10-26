@@ -33,7 +33,7 @@ public final class SettingsActivity extends Activity {
         title.setPadding(0, 0, 0, 12);
         content.addView(title);
         TextView description = new TextView(this);
-        description.setText("Tune the cloud scene and floating clock. Changes apply the next time the screensaver starts.");
+        description.setText("Real filmed flight with optional clock. Changes apply the next time the screensaver starts. Sunset cloud flight retains its photographed lighting and cloud cover; the old palette and density values are preserved but inactive.");
         description.setTextSize(16);
         description.setPadding(0, 0, 0, 12);
         content.addView(description);
@@ -46,15 +46,9 @@ public final class SettingsActivity extends Activity {
             }
         });
         content.addView(preview);
-        addChoice(content, "Sky palette", "palette",
-                new String[] {"day", "sunset", "night", "random"},
-                new String[] {"Daylight", "Golden hour", "Moonlit", "Random"}, "day");
-        addChoice(content, "Cloud density", "density",
-                new String[] {"light", "balanced", "full", "random"},
-                new String[] {"Light", "Balanced", "Full", "Random"}, "balanced");
-        addChoice(content, "Cloud motion", "speed",
+        addChoice(content, "Playback speed", "speed",
                 new String[] {"slow", "gentle", "drifting", "random"},
-                new String[] {"Slow", "Gentle", "Drifting", "Random"}, "gentle");
+                new String[] {"0.75x slow motion", "1x original flight", "1.25x faster flight", "Random"}, "gentle");
         addCheckBox(content, "Show clock", "show_clock", true);
         addChoice(content, "Clock size", "clock_size",
                 new String[] {"subtle", "standard", "large", "random"},
@@ -68,8 +62,55 @@ public final class SettingsActivity extends Activity {
         addChoice(content, "Show seconds", "show_seconds",
                 new String[] {"false", "true", "random"},
                 new String[] {"Off", "On", "Random"}, "false");
-        addCheckBox(content, "Randomize scene and clock style when the screensaver starts", "randomize_all", false);
+        addCheckBox(content, "Randomize playback speed and clock style when the screensaver starts", "randomize_all", false);
+        Button credits = new Button(this);
+        credits.setText("Credits and licenses");
+        credits.setOnClickListener(view -> showCredits());
+        content.addView(credits);
         setContentView(scroll);
+        preview.setFocusableInTouchMode(true);
+        preview.requestFocus();
+    }
+
+    private void showCredits() {
+        TextView text = new TextView(this);
+        text.setTextSize(18);
+        text.setPadding(32, 20, 32, 20);
+        try {
+            StringBuilder credits = new StringBuilder("Press Up to read. Press Right to return to Close.\n\n");
+            for (String name : new String[] {"NOTICE.txt", "CC-BY-3.0.txt", "LICENSE.txt"}) {
+                try (java.io.InputStream stream = getAssets().open(name)) {
+                    java.io.ByteArrayOutputStream bytes = new java.io.ByteArrayOutputStream();
+                    byte[] buffer = new byte[8192];
+                    int count;
+                    while ((count = stream.read(buffer)) != -1) bytes.write(buffer, 0, count);
+                    credits.append(new String(bytes.toByteArray(), java.nio.charset.StandardCharsets.UTF_8)).append("\n\n");
+                }
+            }
+            text.setText(credits);
+        } catch (java.io.IOException error) {
+            text.setText("Credits could not be loaded.");
+        }
+        ScrollView scroll = new ScrollView(this);
+        scroll.setFocusable(true);
+        scroll.addView(text);
+        android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(this)
+                .setTitle("Credits and licenses").setView(scroll)
+                .setPositiveButton("Close", null).create();
+        dialog.setOnShowListener(shown -> {
+            Button close = dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE);
+            close.setFocusableInTouchMode(true);
+            close.requestFocus();
+            scroll.setOnKeyListener((view, keyCode, event) -> {
+                if (event.getAction() == android.view.KeyEvent.ACTION_DOWN
+                        && keyCode == android.view.KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    close.requestFocus();
+                    return true;
+                }
+                return false;
+            });
+        });
+        dialog.show();
     }
 
     private void addChoice(LinearLayout content, String title, String key, String[] values,
@@ -90,7 +131,7 @@ public final class SettingsActivity extends Activity {
         Object stored = preferences.getAll().get(key);
         String selected = SettingsValues.normalizeChoice(key, stored, fallback);
         if (stored != null && !(stored instanceof String)) {
-            preferences.edit().putString(key, selected).apply();
+            preferences.edit().putString(key, selected).commit();
         }
         int selection = 0;
         for (int i = 0; i < values.length; i++) if (values[i].equals(selected)) selection = i;
@@ -99,7 +140,7 @@ public final class SettingsActivity extends Activity {
             @Override
             public void onItemSelected(android.widget.AdapterView<?> parent, View view,
                     int position, long id) {
-                preferences.edit().putString(key, values[position]).apply();
+                preferences.edit().putString(key, values[position]).commit();
             }
 
             @Override
@@ -116,7 +157,7 @@ public final class SettingsActivity extends Activity {
         checkBox.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(android.widget.CompoundButton button, boolean checked) {
-                preferences.edit().putBoolean(key, checked).apply();
+                preferences.edit().putBoolean(key, checked).commit();
             }
         });
         content.addView(checkBox);
